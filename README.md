@@ -49,3 +49,6 @@ It also includes user authentication, profile management
     The backend should be running at `http://localhost:8080`.
 
    Attached postman collection for API details
+   Step 1 : Create User
+   Step 2 : Login with user created. API responds with a JWT token.
+   Step 3 : All subsequent API requests should have a mandatory Authorization header with Bearer token generated in Step 2 
