@@ -10,6 +10,7 @@ It also includes user authentication, profile management
 
 - **User Authentication**: Signup, login, and logout functionality with JWT-based authentication.
 - **User Profile Management**: Users can view and update their profile information.
+- **Role Based Authentication**: Restricted usage of APIs with USER role
 - **Book Management**: Browse books available in the store.
 - **Cart Management**: Add, remove, and clear items in the cart.
 - **Order Management**: Place orders from the cart and view order history.

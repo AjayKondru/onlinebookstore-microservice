@@ -2,6 +2,7 @@ package com.org.mybookstore.api.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +26,14 @@ public class BookController {
  private JwtUtil jwtUtils;
 
  @GetMapping("/fetchAll")
+ @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
  public ResponseEntity<?> getAllBooks(HttpServletRequest request) {
 	 
 	return  ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
  }
 
  @GetMapping("/{id}")
+ @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
  public Book getBookById(@PathVariable Long id,HttpServletRequest request) {
 	
 	return	 bookService.getBookById(id).get();
@@ -38,6 +41,7 @@ public class BookController {
  
 
  @PostMapping("/create")
+ @PreAuthorize("hasAuthority('ADMIN')")
  public Book createBook(@RequestBody Book book,HttpServletRequest request) {
      
 	
@@ -45,6 +49,7 @@ public class BookController {
  }
  
  @PostMapping("/update")
+ @PreAuthorize("hasAuthority('ADMIN')")
  public ResponseEntity<?> updateBook(@RequestBody Book updatedbook,HttpServletRequest request) {
 	 
 	
@@ -62,6 +67,7 @@ public class BookController {
  }
 
  @DeleteMapping("/{id}")
+ @PreAuthorize("hasAuthority('ADMIN')")
  public ResponseEntity<?> deleteBook(@PathVariable Long id,HttpServletRequest request) {
 	 
 	bookService.deleteBook(id);

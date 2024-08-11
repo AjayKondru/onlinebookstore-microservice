@@ -22,10 +22,11 @@ public class User {
  private String username;
  private String password;
  private String email;
- enum role {
-     USER,
-     ADMIN;
- }
+ @Enumerated(EnumType.STRING)
+ @Column(nullable = false)
+ private role role;
  
 }
+
+
 

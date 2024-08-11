@@ -68,7 +68,7 @@ public class UserController {
                  .body("Bad Credentials");
     	 
      }
-     final String jwt = jwtUtil.generateToken(user.getUsername());
+     final String jwt = jwtUtil.generateToken(user);
 
      Map<String, String> response = new HashMap<>();
      response.put("token", jwt);
