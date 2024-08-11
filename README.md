@@ -45,10 +45,19 @@ It also includes user authentication, profile management
     mvn clean install
     mvn spring-boot:run
     ```
+	## API Documentation
 
-    The backend should be running at `http://localhost:8080`.
+This project includes auto-generated API documentation using Swagger (Springdoc OpenAPI).
 
-   Attached postman collection for API details
+	### Accessing Swagger UI
+
+	After running the backend, you can access the Swagger UI at:
+	http://localhost:8080/swagger-ui/index.html
+	
+	
+   The backend should be running at `http://localhost:8080`.
+
+   Attached postman collection for more  API details
    Step 1 : Create User
    Step 2 : Login with user created. API responds with a JWT token.
    Step 3 : All subsequent API requests should have a mandatory Authorization header with Bearer token generated in Step 2 
