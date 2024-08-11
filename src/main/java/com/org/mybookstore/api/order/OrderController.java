@@ -31,32 +31,22 @@ public class OrderController {
 	public ResponseEntity<?> getUserOrders(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrdersByUser(user));
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@PostMapping("/checkout")
 	public ResponseEntity<?> createOrder(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			return ResponseEntity.status(HttpStatus.OK).body("Total amount of Order :"+orderService.createOrder(user).getTotalAmount());
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<?> updateOrder(HttpServletRequest request, @RequestParam String id, @RequestParam String status) {
-		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(id,status));
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 }

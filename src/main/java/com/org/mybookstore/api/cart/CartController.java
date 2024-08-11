@@ -35,49 +35,37 @@ public class CartController {
 	public ResponseEntity<?> getCartItems(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			return ResponseEntity.status(HttpStatus.OK).body(cartService.getCartItems(user));
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@PostMapping("/add")
 	public ResponseEntity<?> addBookToCart(HttpServletRequest request, @RequestParam Long bookId,
 			@RequestParam int quantity) {
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			return ResponseEntity.status(HttpStatus.OK).body(cartService.addBookToCart(bookId, quantity, user));
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@DeleteMapping("/remove/{cartItemId}")
 	public ResponseEntity<?> removeBookFromCart(HttpServletRequest request, @PathVariable Long cartItemId) {
 
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			cartService.removeBookFromCart(cartItemId, user);
 			return ResponseEntity.status(HttpStatus.OK).build();
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@DeleteMapping("/clear")
 	public ResponseEntity<?> clearCart(HttpServletRequest request) {
 
 		String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-		if (jwtUtils.validateJwtToken(token)) {
 			String username = jwtUtils.extractUsername(token);
 			User user = userService.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 			cartService.clearCart(user);
 			return ResponseEntity.status(HttpStatus.OK).build();
-		} else
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 }

@@ -26,40 +26,28 @@ public class BookController {
 
  @GetMapping("/fetchAll")
  public ResponseEntity<?> getAllBooks(HttpServletRequest request) {
-	 String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-	 if(jwtUtils.validateJwtToken(token))	 
-     return ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
-	 else
-	return	 ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		 
+	 
+	return  ResponseEntity.status(HttpStatus.OK).body(bookService.getAllBooks());
  }
 
  @GetMapping("/{id}")
- public ResponseEntity<?> getBookById(@PathVariable Long id,HttpServletRequest request) {
-	 String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-	 if(jwtUtils.validateJwtToken(token))	 
-     return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookById(id).get());
-	 else
-	return	 ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+ public Book getBookById(@PathVariable Long id,HttpServletRequest request) {
+	
+	return	 bookService.getBookById(id).get();
  }
  
 
  @PostMapping("/create")
- public ResponseEntity<?> createBook(@RequestBody Book book,HttpServletRequest request) {
+ public Book createBook(@RequestBody Book book,HttpServletRequest request) {
      
-	 String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-	 if(jwtUtils.validateJwtToken(token))	 
-     return ResponseEntity.status(HttpStatus.OK).body(bookService.saveBook(book));
-	 else
-	return	 ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	
+	return	bookService.saveBook(book);
  }
  
  @PostMapping("/update")
  public ResponseEntity<?> updateBook(@RequestBody Book updatedbook,HttpServletRequest request) {
 	 
-	 String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-	 if(jwtUtils.validateJwtToken(token))	
-	 {
+	
 	 Book book = bookService.getBookById(updatedbook.getId()).get();
 	 book.setAuthor(updatedbook.getAuthor());
 	 book.setDescription(updatedbook.getDescription());
@@ -68,25 +56,19 @@ public class BookController {
 	 return ResponseEntity
                  .ok()
                  .body(bookService.saveBook(book));
-	 }
-	 else
-			return	 ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	
      
 		 
  }
 
  @DeleteMapping("/{id}")
  public ResponseEntity<?> deleteBook(@PathVariable Long id,HttpServletRequest request) {
-	 String token = request.getHeader("Authorization")!=null?request.getHeader("Authorization").substring(7):"";
-	 if(jwtUtils.validateJwtToken(token))	
-	 {
+	 
 	bookService.deleteBook(id);
 	return  ResponseEntity
      .ok()
      .body("Book deleted succesfully");
-	 }
-	 else
-	return	 ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	
  }
 }
 
